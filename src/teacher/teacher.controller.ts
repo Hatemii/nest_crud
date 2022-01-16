@@ -15,7 +15,7 @@ export class TeacherController {
 
   @Post()
   createTeacher(@Body() body: CreateTeacherDto) {
-    return `Teacher ${body} created successfully`;
+    return `Teacher ${JSON.stringify(body)} created successfully`;
   }
 
   @Put('/:teacherId')
@@ -23,7 +23,9 @@ export class TeacherController {
     @Param('teacherId') teacherId: string,
     @Body() body: UpdateTeacherDto,
   ) {
-    return `Teacher with id ${teacherId} and data ${body} updated successfully`;
+    return `Teacher with id ${teacherId} and data ${JSON.stringify(
+      body,
+    )} updated successfully`;
   }
 
   @Put('/column/:teacherId')

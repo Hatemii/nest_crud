@@ -15,7 +15,7 @@ export class StudentController {
 
   @Post()
   createStudent(@Body() body: CreateStudentDto) {
-    return `Student ${body} created`;
+    return `Student ${JSON.stringify(body)} created`;
   }
 
   // second example without calling DTO class
@@ -29,7 +29,9 @@ export class StudentController {
     @Param('studentId') studentId: string,
     @Body() body: UpdateStudentDto,
   ) {
-    return `Student with id ${studentId} and data ${body} updated successfully`;
+    return `Student with id ${studentId} and data ${JSON.stringify(
+      body,
+    )} updated successfully`;
   }
 
   @Put('/column/:studentId')
