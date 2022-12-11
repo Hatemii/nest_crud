@@ -1,52 +1,44 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { StudentEntity } from '../model/student.entity';
 import { students } from '../../db/db';
-import {
-  StudentsResponseDto,
-  CreateStudentDto,
-  UpdateStudentDto,
-} from '../dto/student.dto';
-import { v4 as uuid } from 'uuid';
+import e from 'express';
 
 @Injectable()
 export class StudentService {
-  private students = students;
+  @InjectRepository(StudentEntity)
+  repository: Repository<StudentEntity>;
 
-  getStudents(): StudentsResponseDto[] {
-    return this.students;
+  getAllStudents() {
+    return this.repository.createQueryBuilder().getMany();
   }
 
-  getStudentById(studentId: string): StudentsResponseDto {
-    return this.students.find((student) => {
-      return student.id === studentId;
-    });
+  getOneStudent(id) {
+    return this.repository.findOne({ where: { id: id } });
   }
 
-  createStudent(data: CreateStudentDto): StudentsResponseDto {
-    const newStudent = {
-      id: uuid(),
-      ...data,
-    };
-    this.students.push(newStudent);
-    return newStudent;
+  createStudent(data) {
+    return this.repository.create(data);
   }
 
-  updateStudent(id: string, data: UpdateStudentDto): StudentsResponseDto {
-    let updatedStudent: StudentsResponseDto;
-
-    const studentToUpate = this.students.map((student) => {
-      if (student.id === id) {
-        updatedStudent = {
-          id,
-          ...data,
-        };
-        return updatedStudent;
+  updateStudent(id, data) {
+    return this.repository.update(id, data).then((res) => {
+      if (res.affected > 0) {
+        return 'successfully updated';
       } else {
-        return student;
+        return `cant find user with id ${id}`;
       }
     });
+  }
 
-    this.students = studentToUpate;
-
-    return updatedStudent;
+  deleteStudent(id) {
+    return this.repository.delete(id).then((res) => {
+      if (res.affected > 0) {
+        return 'successfully deleted';
+      } else {
+        return `cant find user with id ${id}`;
+      }
+    });
   }
 }

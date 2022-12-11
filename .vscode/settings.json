@@ -1,0 +1,13 @@
+{
+  "workbench.colorCustomizations": {
+    "editorIndentGuide.background": "#000000",
+    "editor.selectionBackground": "#696969",
+    "editor.selectionHighlightBackground": "#424242",
+    "terminal.foreground": "#ffffff"
+  },
+  "editor.fontSize": 12.5,
+  "editor.fontFamily": "JetBrains Mono",
+  "editor.tabSize": 2,
+  "editor.defaultFormatter": null,
+  "vetur.format.defaultFormatter.js": "none"
+}

@@ -1,35 +1,43 @@
-import { Controller, Get, Post, Put, Param, Body } from '@nestjs/common';
 import {
-  StudentsResponseDto,
-  CreateStudentDto,
-  UpdateStudentDto,
-} from '../dto/student.dto';
+  Controller,
+  Get,
+  Post,
+  Put,
+  Param,
+  Body,
+  Inject,
+  Delete,
+} from '@nestjs/common';
+import { StudentEntity } from '../model/student.entity';
 import { StudentService } from '../service/student.service';
 
 @Controller('students')
 export class StudentController {
-  constructor(private studentService: StudentService) {}
+  @Inject(StudentService)
+  private readonly studentService: StudentService;
 
   @Get()
-  getStudents(): StudentsResponseDto[] {
-    return this.studentService.getStudents();
+  async getAllStudents(): Promise<StudentEntity[]> {
+    return await this.studentService.getAllStudents();
   }
 
-  @Get('/:studentId')
-  getStudentById(@Param('studentId') studentId: string) {
-    return this.studentService.getStudentById(studentId);
+  @Get('/:id')
+  async getOneStudent(@Param('id') id: number): Promise<StudentEntity> {
+    return this.studentService.getOneStudent(id);
   }
 
   @Post()
-  createStudent(@Body() body: CreateStudentDto) {
-    return this.studentService.createStudent(body);
+  async createStudent(@Body() data: StudentEntity) {
+    return await this.studentService.createStudent(data);
   }
 
-  @Put('/:studentId')
-  updateStudentObject(
-    @Param('studentId') studentId: string,
-    @Body() body: UpdateStudentDto,
-  ) {
-    return this.studentService.updateStudent(studentId, body);
+  @Put('/:id')
+  async updateStudent(@Param('id') id: number, @Body() data: StudentEntity) {
+    return await this.studentService.updateStudent(id, data);
+  }
+
+  @Delete('/:id')
+  async deleteStudent(@Param('id') id: number) {
+    return this.studentService.deleteStudent(id);
   }
 }
