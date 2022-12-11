@@ -14,6 +14,6 @@ export class AuthService {
       return findUser;
     }
 
-    return 'username or password is incorrect';
+    return null;
   }
 }
