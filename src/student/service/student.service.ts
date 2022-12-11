@@ -2,8 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { StudentEntity } from '../model/student.entity';
-import { students } from '../../db/db';
-import e from 'express';
 
 @Injectable()
 export class StudentService {
@@ -19,7 +17,8 @@ export class StudentService {
   }
 
   createStudent(data) {
-    return this.repository.create(data);
+    const new_student = this.repository.create(data); // create() creates new instance of entity, but doesn't put it into db
+    return this.repository.save(new_student);
   }
 
   updateStudent(id, data) {
