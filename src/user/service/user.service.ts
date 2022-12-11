@@ -12,8 +12,8 @@ export class UserService {
     return this.repository.createQueryBuilder().getMany();
   }
 
-  getOneUser(id: number) {
-    return this.repository.findOne({ where: { id: id } });
+  getOneUser(id?: number, username?: string) {
+    return this.repository.findOne({ where: { id: id, username: username } });
   }
 
   createUser(data: UserEntity) {
