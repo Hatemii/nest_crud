@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { StudentEntity } from '../model/student.entity';
+import { StudentEntity } from '../entity/student.entity';
 
 @Injectable()
 export class StudentService {
@@ -12,16 +12,16 @@ export class StudentService {
     return this.repository.createQueryBuilder().getMany();
   }
 
-  getOneStudent(id) {
+  getOneStudent(id: number) {
     return this.repository.findOne({ where: { id: id } });
   }
 
-  createStudent(data) {
+  createStudent(data: StudentEntity) {
     const new_student = this.repository.create(data); // create() creates new instance of entity, but doesn't put it into db
     return this.repository.save(new_student);
   }
 
-  updateStudent(id, data) {
+  updateStudent(id: number, data: StudentEntity) {
     return this.repository.update(id, data).then((res) => {
       if (res.affected > 0) {
         return 'successfully updated';
@@ -31,7 +31,7 @@ export class StudentService {
     });
   }
 
-  deleteStudent(id) {
+  deleteStudent(id: number) {
     return this.repository.delete(id).then((res) => {
       if (res.affected > 0) {
         return 'successfully deleted';

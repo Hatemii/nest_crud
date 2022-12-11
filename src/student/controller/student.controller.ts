@@ -8,7 +8,7 @@ import {
   Inject,
   Delete,
 } from '@nestjs/common';
-import { StudentEntity } from '../model/student.entity';
+import { StudentEntity } from '../entity/student.entity';
 import { StudentService } from '../service/student.service';
 
 @Controller('students')
