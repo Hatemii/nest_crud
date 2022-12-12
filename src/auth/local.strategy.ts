@@ -12,7 +12,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
   async validate(username: string, password: string) {
     const user = this.authService.validateUser(username, password);
     if (user) {
-      return user;
+      return user; // @Request req -> has user on AppController
     }
     return new UnauthorizedException();
   }

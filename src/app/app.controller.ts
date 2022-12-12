@@ -6,6 +6,6 @@ export class AppController {
   @UseGuards(AuthGuard('local'))
   @Post('auth/login')
   async login(@Request() req) {
-    return req.user;
+    return req.user; // req -> user from validate function (LocalStrategy)
   }
 }
